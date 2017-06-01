@@ -67,7 +67,7 @@ struct ClusterModel leach(ClusterModel clusterM, int roundNo)
 		{
 			int temp_rand = rand(); 
 
-			if(nodeA.node[i].G <= 0 && (temp_rand <= prob(r, p)) && (nodeA.node[i].energy > 0))
+			if(nodeA.node[i].G <= 0 && ((temp_rand % 100) <= (100 * prob(r, p))) && (nodeA.node[i].energy > 0))
 			{
 				countCHs++;
 

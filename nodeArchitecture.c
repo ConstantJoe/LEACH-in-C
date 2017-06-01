@@ -15,11 +15,11 @@ struct NodeArch newNodes(NetArch netA, int numNodes)
 
 	for(int i=0;i<numNodes;i++)
 	{
-		int r = rand(); 
 
 		//need to allocate space for each of the nodes
-		nodeA.node[i].x = r * netA.yard.width; 
-		nodeA.node[i].y = r * netA.yard.height;	// cant access inner node properties this way
+
+		nodeA.node[i].x = rand() % netA.yard.width; 	
+		nodeA.node[i].y = rand() % netA.yard.height;
 		nodeA.node[i].G = 0; 
 		nodeA.node[i].type = 'N';
 		nodeA.node[i].energy = netA.energy.init;

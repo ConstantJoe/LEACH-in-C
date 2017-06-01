@@ -1,5 +1,6 @@
 #include "clusterModel.h"
 #include <math.h>
+#include <stdio.h>
 
 #ifndef LEACH_H
 #define LEACH_H

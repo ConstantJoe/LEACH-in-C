@@ -15,12 +15,12 @@ typedef struct Sink
 
 typedef struct Energy
 {
-	unsigned long init;
-	unsigned long transfer;
-	unsigned long receive;
-	unsigned long freespace;
-	unsigned long multipath;
-	unsigned long aggr;
+	double init;
+	double transfer;
+	double receive;
+	double freespace;
+	double multipath;
+	double aggr;
 } Energy;
 
 typedef struct NetArch

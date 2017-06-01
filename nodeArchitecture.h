@@ -1,6 +1,7 @@
 #include "netArchitecture.h"
 #include <time.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #ifndef NODEARCHITECTURE_H
 #define NODEARCHITECTURE_H
@@ -12,7 +13,7 @@ typedef struct Node {
 	int y;
 	char type;
 	int G;
-	long energy;
+	float energy;
 	int clusterHead;
 	int dead;
 } Node;

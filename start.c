@@ -15,20 +15,43 @@
 
 int main() 
 {  
+    printf("Testing 1\r\n");
+  
 	struct NetArch netA  	 = newNetwork(100, 100, 50, 175);
 	struct NodeArch nodeA 	 = newNodes(netA, NUMNODES);
 	struct RoundArch roundA  = newRound(0,0,0);
 
+    printf("Testing 2\r\n");
+
 	for(int i=0; i<roundA.numRound; i++)
 	{
+        printf("Node 1 characteristics: %d\r\n", nodeA.node[1].x);
+        printf("Node 1 characteristics: %d\r\n", nodeA.node[1].y);
+        printf("Node 1 characteristics: %c\r\n", nodeA.node[1].type);
+        printf("Node 1 characteristics: %f\r\n", nodeA.node[1].energy);
+        printf("Node 1 characteristics: %d\r\n", nodeA.node[1].G);
+        printf("Node 1 characteristics: %d\r\n", nodeA.node[1].clusterHead);
+        printf("Node 1 characteristics: %d\r\n", nodeA.node[1].dead);
+
+        printf("Testing in round %d 1 \r\n", i);
 		struct ClusterModel clusterM = newCluster(netA, nodeA, i, P);
+
+        printf("Testing in round %d 2 \r\n", i);
     	clusterM  = dissEnergyCH(clusterM, roundA);
-    	clusterM  = dissEnergyNonCH(clusterM, roundA);
-    	nodeA     = clusterM.nodeA; // new node architecture after select CHs
+    	
+        printf("Testing in round %d 3 \r\n", i);
+        clusterM  = dissEnergyNonCH(clusterM, roundA);
+    	
+        printf("Testing in round %d 4 \r\n", i);
+        nodeA     = clusterM.nodeA; // new node architecture after select CHs
     
+        printf("Testing in round %d 5 \r\n", i);
     	//par = plotResults(clusterModel, r, par);
     	if(nodeA.numDead == nodeA.numNode)
     	{
+            printf("All are dead \r\n");
+            printf(" %d  \r\n", nodeA.numDead);
+            printf(" %d  \r\n", nodeA.numNode);
         	break;
     	}
 	}
