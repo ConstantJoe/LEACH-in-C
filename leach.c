@@ -78,7 +78,7 @@ struct ClusterModel leach(ClusterModel clusterM, int roundNo)
 				clusterN.cNodes[countCHs].locX = nodeA.node[i].x; 
 				clusterN.cNodes[countCHs].locY = nodeA.node[i].y;
 
-				clusterN.cNodes[countCHs].distance = sqrt((nodeA.node[i].x - netA.sink.x)^2 + (nodeA.node[i].y - netA.sink.y)^2);
+				clusterN.cNodes[countCHs].distance = sqrt(pow(nodeA.node[i].x - netA.sink.x, 2) + pow(nodeA.node[i].y - netA.sink.y, 2));
 			}
 		}
 	}

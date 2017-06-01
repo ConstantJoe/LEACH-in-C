@@ -1,4 +1,13 @@
-#include "clusterModel.h"
+#include "newCluster.h"
+
+int clusterOptimum(NetArch netA, NodeArch nodeA, float dBS)
+{
+	int n = nodeA.numNode;
+	int m = sqrt(netA.yard.height * netA.yard.width);
+	float kopt = sqrt(n) / sqrt(2*M_PI) * sqrt(netA.energy.freespace / netA.energy.multipath) * m / pow(dBS,2);
+	kopt = round(kopt);
+	return (int) kopt;
+}
 
 ClusterModel newCluster(NetArch netA, NodeArch nodeA, int roundNo, int p_numCluster)
 {
@@ -9,9 +18,9 @@ ClusterModel newCluster(NetArch netA, NodeArch nodeA, int roundNo, int p_numClus
 
 	if(p_numCluster == 0)
 	{
-		float dBS = sqrt((netA.sink.x - netA.yard.length)^2 + (netA.sink.y - netA.yard.width)^2);
+		float dBS = sqrt(pow(netA.sink.x - netA.yard.height, 2) + pow(netA.sink.y - netA.yard.width, 2));
 		clusterM.numCluster = clusterOptimum(netA, nodeA, dBS);
-		clusterM.p = 1 / numCluster;	
+		clusterM.p = 1 / p_numCluster;	
 	}
 	else
 	{

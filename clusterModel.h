@@ -1,6 +1,6 @@
 #include "netArchitecture.h"
 #include "nodeArchitecture.h"
-
+#include <math.h>
 
 #ifndef CLUSTERMODEL_H
 #define CLUSTERMODEL_H
@@ -27,8 +27,6 @@ typedef struct ClusterModel{
 	float p;
 	ClusterNodes clusterN;
 } ClusterModel;
-
-ClusterModel newCluster(NetArch netA, NodeArch nodeA, int roundNo, int p_numCluster);
 
 #endif /* CLUSTERMODEL_H */
 
