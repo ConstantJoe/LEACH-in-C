@@ -12,7 +12,7 @@ typedef struct ClusterNode{
 	int no; //index of the node in the nodeArchitecture
 	int locX;
 	int locY;
-	float distance; //distance from sink
+	double distance; //distance from sink
 } ClusterNode;
 
 typedef struct ClusterNodes{

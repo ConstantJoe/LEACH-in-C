@@ -7,7 +7,7 @@ ClusterModel dissEnergyCH(ClusterModel clusterM, RoundArch roundA)
     NetArch netA  = clusterM.netA;
     ClusterNodes clusterN = clusterM.clusterN;
 
-    float d0 = sqrt(netA.energy.freespace / netA.energy.multipath);
+    double d0 = sqrt(netA.energy.freespace / netA.energy.multipath);
 
     /*if (clusterN.countCHs == 0)
     {
@@ -27,7 +27,7 @@ ClusterModel dissEnergyCH(ClusterModel clusterM, RoundArch roundA)
     for(int i=0;i<n;i++)
     {
         int chNo = clusterN.cNodes[i].no;
-        float distance = clusterN.cNodes[i].distance;
+        double distance = clusterN.cNodes[i].distance;
         float energy = nodeA.node[chNo].energy;
 
         if(distance >= d0)
@@ -57,7 +57,7 @@ ClusterModel dissEnergyNonCH(ClusterModel clusterM, RoundArch roundA)
         return NULL;
     }*/
 
-    float d0 = sqrt(netA.energy.freespace / netA.energy.multipath);
+    double d0 = sqrt(netA.energy.freespace / netA.energy.multipath);
 
     float ETX = netA.energy.transfer;
     float ERX = netA.energy.receive;
@@ -79,11 +79,11 @@ ClusterModel dissEnergyNonCH(ClusterModel clusterM, RoundArch roundA)
 
             //get the shortest distance to a cluster head
             int loc = 0;
-            int minDis = 1000000;
+            double minDis = 1000000;
 
             for(int j=0;j<countCH;j++)
             {
-                int dist = sqrt( pow(locNodeX - clusterN.cNodes[j].locX, 2) + pow(locNodeY - clusterN.cNodes[j].locY, 2));
+                double dist = sqrt( pow(locNodeX - clusterN.cNodes[j].locX, 2) + pow(locNodeY - clusterN.cNodes[j].locY, 2));
 
                 if(dist < minDis)
                 {

@@ -25,26 +25,64 @@ int main()
 
 	for(int i=0; i<roundA.numRound; i++)
 	{
-        printf("Node 1 characteristics: %d\r\n", nodeA.node[1].x);
-        printf("Node 1 characteristics: %d\r\n", nodeA.node[1].y);
-        printf("Node 1 characteristics: %c\r\n", nodeA.node[1].type);
-        printf("Node 1 characteristics: %f\r\n", nodeA.node[1].energy);
-        printf("Node 1 characteristics: %d\r\n", nodeA.node[1].G);
-        printf("Node 1 characteristics: %d\r\n", nodeA.node[1].clusterHead);
-        printf("Node 1 characteristics: %d\r\n", nodeA.node[1].dead);
+        printf("Node 1 characteristics: %d\r\n", nodeA.node[0].x);
+        printf("Node 1 characteristics: %d\r\n", nodeA.node[0].y);
+        printf("Node 1 characteristics: %c\r\n", nodeA.node[0].type);
+        printf("Node 1 characteristics: %f\r\n", nodeA.node[0].energy);
+        printf("Node 1 characteristics: %d\r\n", nodeA.node[0].G);
+        printf("Node 1 characteristics: %d\r\n", nodeA.node[0].clusterHead);
+        printf("Node 1 characteristics: %d\r\n", nodeA.node[0].dead);
+        printf("\r\n");
 
         printf("Testing in round %d 1 \r\n", i);
 		struct ClusterModel clusterM = newCluster(netA, nodeA, i, P);
 
+        printf("Node 1 characteristics: %d\r\n", clusterM.nodeA.node[0].x);
+        printf("Node 1 characteristics: %d\r\n", clusterM.nodeA.node[0].y);
+        printf("Node 1 characteristics: %c\r\n", clusterM.nodeA.node[0].type);
+        printf("Node 1 characteristics: %f\r\n", clusterM.nodeA.node[0].energy);
+        printf("Node 1 characteristics: %d\r\n", clusterM.nodeA.node[0].G);
+        printf("Node 1 characteristics: %d\r\n", clusterM.nodeA.node[0].clusterHead);
+        printf("Node 1 characteristics: %d\r\n", clusterM.nodeA.node[0].dead);
+        printf("\r\n");
+
         printf("Testing in round %d 2 \r\n", i);
     	clusterM  = dissEnergyCH(clusterM, roundA);
     	
+        printf("Node 1 characteristics: %d\r\n", clusterM.nodeA.node[0].x);
+        printf("Node 1 characteristics: %d\r\n", clusterM.nodeA.node[0].y);
+        printf("Node 1 characteristics: %c\r\n", clusterM.nodeA.node[0].type);
+        printf("Node 1 characteristics: %f\r\n", clusterM.nodeA.node[0].energy);
+        printf("Node 1 characteristics: %d\r\n", clusterM.nodeA.node[0].G);
+        printf("Node 1 characteristics: %d\r\n", clusterM.nodeA.node[0].clusterHead);
+        printf("Node 1 characteristics: %d\r\n", clusterM.nodeA.node[0].dead);
+        printf("\r\n");
+
         printf("Testing in round %d 3 \r\n", i);
         clusterM  = dissEnergyNonCH(clusterM, roundA);
     	
+        printf("Node 1 characteristics: %d\r\n", clusterM.nodeA.node[0].x);
+        printf("Node 1 characteristics: %d\r\n", clusterM.nodeA.node[0].y);
+        printf("Node 1 characteristics: %c\r\n", clusterM.nodeA.node[0].type);
+        printf("Node 1 characteristics: %f\r\n", clusterM.nodeA.node[0].energy);
+        printf("Node 1 characteristics: %d\r\n", clusterM.nodeA.node[0].G);
+        printf("Node 1 characteristics: %d\r\n", clusterM.nodeA.node[0].clusterHead);
+        printf("Node 1 characteristics: %d\r\n", clusterM.nodeA.node[0].dead);
+        printf("\r\n");
+
         printf("Testing in round %d 4 \r\n", i);
         nodeA     = clusterM.nodeA; // new node architecture after select CHs
+        //this doesn't work, need to copy over data
     
+        printf("Node 1 characteristics: %d\r\n", nodeA.node[0].x);
+        printf("Node 1 characteristics: %d\r\n", nodeA.node[0].y);
+        printf("Node 1 characteristics: %c\r\n", nodeA.node[0].type);
+        printf("Node 1 characteristics: %f\r\n", nodeA.node[0].energy);
+        printf("Node 1 characteristics: %d\r\n", nodeA.node[0].G);
+        printf("Node 1 characteristics: %d\r\n", nodeA.node[0].clusterHead);
+        printf("Node 1 characteristics: %d\r\n", nodeA.node[0].dead);
+        printf("\r\n");
+
         printf("Testing in round %d 5 \r\n", i);
     	//par = plotResults(clusterModel, r, par);
     	if(nodeA.numDead == nodeA.numNode)
