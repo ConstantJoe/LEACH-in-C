@@ -9,40 +9,39 @@ float prob(int roundNo, float p)
 
 	float P = p / (1-p * (roundNo % ( (int) round(1/p))) );
 
+	//printf("P: %f\r\n", P);
 	return P;
 }
 
 struct ClusterModel* leach(ClusterModel* clusterM, int roundNo)
 {
-	struct NodeArch nodeA = clusterM->nodeA;
-	struct NetArch netA = clusterM->netA;
 
 	int r = roundNo;
 	float p = clusterM->p;
-	int n = nodeA.numNode;
+	int n = clusterM->nodeA.numNode;
 
 	if(r % clusterM->numCluster == 0)
 	{
 		for(int i=0;i<n;i++)
 		{
-			nodeA.node[i].G = 0;
+			clusterM->nodeA.node[i].G = 0;
 		}
 	}
 
 	int deadCount = 0;
-	for(int i=0; i<nodeA.numNode; i++)
+	for(int i=0; i<clusterM->nodeA.numNode; i++)
 	{
-		if(!(nodeA.node[i].dead))
+		if(!(clusterM->nodeA.node[i].dead))
 		{
-			if(nodeA.node[i].energy <= 0)
+			if(clusterM->nodeA.node[i].energy <= 0)
 			{
-				nodeA.node[i].type = 'D';
-            	nodeA.node[i].dead = 1;
+				clusterM->nodeA.node[i].type = 'D';
+            	clusterM->nodeA.node[i].dead = 1;
             	deadCount++;
 			}
 			else
 			{
-				nodeA.node[i].type = 'N';
+				clusterM->nodeA.node[i].type = 'N';
 			}	
 		}
 		else
@@ -51,46 +50,44 @@ struct ClusterModel* leach(ClusterModel* clusterM, int roundNo)
 		}
 	}
 
-	nodeA.numDead = deadCount;
+	clusterM->nodeA.numDead = deadCount;
 
 
-	struct ClusterNodes *clusterN = malloc(sizeof *clusterN); 
+	//struct ClusterNodes *clusterN = malloc(sizeof *clusterN); 
 
 	//find the cluster head
 	int countCHs = 0;
+	clusterM->clusterN.countCHs = 0;
 	srand(time(NULL)); 
 
-
-	for(int i=0; i<nodeA.numNode; i++)
+	printf("optimal number of clusters: %f\r\n", (clusterM->nodeA.numNode - clusterM->nodeA.numDead) * p);
+	for(int i=0; i<clusterM->nodeA.numNode; i++)
 	{
-		if(!(nodeA.node[i].dead))
+		if(!(clusterM->nodeA.node[i].dead))
 		{
 			int temp_rand = rand(); 
 
-			if(nodeA.node[i].G <= 0 && ((temp_rand % 100) <= (100 * prob(r, p))) && (nodeA.node[i].energy > 0))
+			//if(clusterM->nodeA.node[i].G <= 0 && ((temp_rand % 100) <= (100 * prob(n-deadCount, p))) && (clusterM->nodeA.node[i].energy > 0))
+			if(clusterM->nodeA.node[i].G <= 0 && ((temp_rand % 100) <= (100 *  p)) && (clusterM->nodeA.node[i].energy > 0))
 			{
+				clusterM->nodeA.node[i].type = 'C';
+
+				//clusterM->nodeA.node[i].G	= round(1/p)-1; //is this right?
+
+				clusterM->clusterN.cNodes[countCHs].no = i; 
+
+				clusterM->clusterN.cNodes[countCHs].locX = clusterM->nodeA.node[i].x; 
+
+				clusterM->clusterN.cNodes[countCHs].locY = clusterM->nodeA.node[i].y;
+
+				clusterM->clusterN.cNodes[countCHs].distance = sqrt(pow(clusterM->nodeA.node[i].x - clusterM->netA.sink.x, 2) + pow(clusterM->nodeA.node[i].y - clusterM->netA.sink.y, 2));
+
 				countCHs++;
-
-				nodeA.node[i].type = 'C';
-
-				nodeA.node[i].G	= round(1/p)-1; //is this right?
-
-				clusterN->cNodes[countCHs].no = i;  //the problem is here.
-
-				clusterN->cNodes[countCHs].locX = nodeA.node[i].x; 
-
-				clusterN->cNodes[countCHs].locY = nodeA.node[i].y;
-
-				clusterN->cNodes[countCHs].distance = sqrt(pow(nodeA.node[i].x - netA.sink.x, 2) + pow(nodeA.node[i].y - netA.sink.y, 2));
 			}
 		}
 	}
 
-
-	clusterN->countCHs = countCHs;
-
-	clusterM->clusterN = *clusterN;
-	clusterM->nodeA = nodeA;
+	clusterM->clusterN.countCHs = countCHs;
 
 	return clusterM;
 }

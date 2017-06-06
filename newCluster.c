@@ -12,16 +12,21 @@ int clusterOptimum(NetArch* netA, NodeArch* nodeA, double dBS)
 	return (int) kopt;
 }
 
-ClusterModel* newCluster(NetArch* netA, NodeArch* nodeA, int roundNo, int p_numCluster)
+ClusterModel* newCluster(NetArch* netA, NodeArch* nodeA)
 {
 	struct ClusterModel *clusterM = malloc(sizeof *clusterM); 
 	clusterM->netA = *netA;
 	clusterM->nodeA = *nodeA;
 
+	return clusterM;
+}
+
+ClusterModel* clusterRun(ClusterModel* clusterM, int roundNo, float p_numCluster)
+{
 	if(p_numCluster == 0)
 	{
-		double dBS = sqrt(pow(netA->sink.x - netA->yard.height, 2) + pow(netA->sink.y - netA->yard.width, 2));
-		clusterM->numCluster = clusterOptimum(netA, nodeA, dBS);
+		double dBS = sqrt(pow(clusterM->netA.sink.x - clusterM->netA.yard.height, 2) + pow(clusterM->netA.sink.y - clusterM->netA.yard.width, 2));
+		clusterM->numCluster = clusterOptimum(&clusterM->netA, &clusterM->nodeA, dBS);
 		clusterM->p = 1 / clusterM->numCluster;	
 	}
 	else

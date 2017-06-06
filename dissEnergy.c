@@ -36,6 +36,8 @@ ClusterModel* dissEnergyCH(ClusterModel* clusterM, RoundArch* roundA)
 
 ClusterModel* dissEnergyNonCH(ClusterModel* clusterM, RoundArch* roundA)
 {
+    //something going wrong in here
+    
     double d0 = sqrt(clusterM->netA.energy.freespace / clusterM->netA.energy.multipath);
 
     float ETX = clusterM->netA.energy.transfer;

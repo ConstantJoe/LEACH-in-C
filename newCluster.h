@@ -8,6 +8,8 @@
 
 int clusterOptimum(NetArch* netA, NodeArch* nodeA, double dBS);
 
-ClusterModel* newCluster(NetArch* netA, NodeArch* nodeA, int roundNo, int p_numCluster);
+ClusterModel* newCluster(NetArch* netA, NodeArch* nodeA);
+
+ClusterModel* clusterRun(ClusterModel* clusterM, int roundNo, float p_numCluster);
 
 #endif /* NEWCLUSTER_H */
