@@ -6,8 +6,8 @@
 #ifndef NEWCLUSTER_H
 #define NEWCLUSTER_H
 
-int clusterOptimum(NetArch netA, NodeArch nodeA, double dBS);
+int clusterOptimum(NetArch* netA, NodeArch* nodeA, double dBS);
 
-ClusterModel newCluster(NetArch netA, NodeArch nodeA, int roundNo, int p_numCluster);
+ClusterModel* newCluster(NetArch* netA, NodeArch* nodeA, int roundNo, int p_numCluster);
 
 #endif /* NEWCLUSTER_H */

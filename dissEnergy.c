@@ -1,81 +1,58 @@
 #include "dissEnergy.h"
 
-ClusterModel dissEnergyCH(ClusterModel clusterM, RoundArch roundA)
+ClusterModel* dissEnergyCH(ClusterModel* clusterM, RoundArch* roundA)
 {
+    double d0 = sqrt(clusterM->netA.energy.freespace / clusterM->netA.energy.multipath);
 
-    NodeArch nodeA = clusterM.nodeA;
-    NetArch netA  = clusterM.netA;
-    ClusterNodes clusterN = clusterM.clusterN;
+    int n = clusterM->clusterN.countCHs;
 
-    double d0 = sqrt(netA.energy.freespace / netA.energy.multipath);
-
-    /*if (clusterN.countCHs == 0)
-    {
-        return NULL;
-    }*/
-
-    int n = clusterN.countCHs;
-
-    float ETX = netA.energy.transfer;
-    float ERX = netA.energy.receive;
-    float EDA = netA.energy.aggr;
-    float Emp = netA.energy.multipath;
-    float Efs = netA.energy.freespace;
-    int packetLength = roundA.packetLength;
-    int ctrPacketLength = roundA.ctrPacketLength;
+    float ETX = clusterM->netA.energy.transfer;
+    float ERX = clusterM->netA.energy.receive;
+    float EDA = clusterM->netA.energy.aggr;
+    float Emp = clusterM->netA.energy.multipath;
+    float Efs = clusterM->netA.energy.freespace;
+    int packetLength = roundA->packetLength;
+    int ctrPacketLength = roundA->ctrPacketLength;
 
     for(int i=0;i<n;i++)
     {
-        int chNo = clusterN.cNodes[i].no;
-        double distance = clusterN.cNodes[i].distance;
-        float energy = nodeA.node[chNo].energy;
+        int chNo = clusterM->clusterN.cNodes[i].no;
+        double distance = clusterM->clusterN.cNodes[i].distance;
+        float energy = clusterM->nodeA.node[chNo].energy;
 
         if(distance >= d0)
         {
-            nodeA.node[chNo].energy = energy - ((ETX+EDA) * packetLength + Emp * packetLength * pow(distance, 2));
+            clusterM->nodeA.node[chNo].energy = energy - ((ETX+EDA) * packetLength + Emp * packetLength * pow(distance, 2));
         }
         else
         {
-            nodeA.node[chNo].energy = energy - ((ETX+EDA) * packetLength + Efs * packetLength * pow(distance, 2));
+            clusterM->nodeA.node[chNo].energy = energy - ((ETX+EDA) * packetLength + Efs * packetLength * pow(distance, 2));
         }
-        nodeA.node[chNo].energy = nodeA.node[chNo].energy - ctrPacketLength * ERX * round(nodeA.numNode / clusterM.numCluster);
+        clusterM->nodeA.node[chNo].energy = clusterM->nodeA.node[chNo].energy - ctrPacketLength * ERX * round(clusterM->nodeA.numNode / clusterM->numCluster);
     }
-
-    clusterM.nodeA = nodeA;
 
     return clusterM;
 }
 
-ClusterModel dissEnergyNonCH(ClusterModel clusterM, RoundArch roundA)
+ClusterModel* dissEnergyNonCH(ClusterModel* clusterM, RoundArch* roundA)
 {
-    NodeArch nodeA = clusterM.nodeA;
-    NetArch netA  = clusterM.netA;
-    ClusterNodes clusterN = clusterM.clusterN;
+    double d0 = sqrt(clusterM->netA.energy.freespace / clusterM->netA.energy.multipath);
 
-    /*if (clusterN.countCHs == 0)
+    float ETX = clusterM->netA.energy.transfer;
+    float ERX = clusterM->netA.energy.receive;
+    float EDA = clusterM->netA.energy.aggr;
+    float Emp = clusterM->netA.energy.multipath;
+    float Efs = clusterM->netA.energy.freespace;
+    int packetLength = roundA->packetLength;
+    int ctrPacketLength = roundA->ctrPacketLength;
+
+    for(int i=0; i<clusterM->nodeA.numNode; i++)
     {
-        return NULL;
-    }*/
-
-    double d0 = sqrt(netA.energy.freespace / netA.energy.multipath);
-
-    float ETX = netA.energy.transfer;
-    float ERX = netA.energy.receive;
-    float EDA = netA.energy.aggr;
-    float Emp = netA.energy.multipath;
-    float Efs = netA.energy.freespace;
-    int packetLength = roundA.packetLength;
-    int ctrPacketLength = roundA.ctrPacketLength;
-
-    for(int i=0; i<nodeA.numNode; i++)
-    {
-        if(nodeA.node[i].type == 'N' && nodeA.node[i].dead == 0 && nodeA.node[i].energy > 0)
+        if(clusterM->nodeA.node[i].type == 'N' && clusterM->nodeA.node[i].dead == 0 && clusterM->nodeA.node[i].energy > 0)
         {
-            int locNodeX = nodeA.node[i].x;
-            int locNodeY = nodeA.node[i].y;
-
-            // = [nodeArch.node(i).x, nodeArch.node(i).y];
-            int countCH = clusterN.countCHs;
+            int locNodeX = clusterM->nodeA.node[i].x;
+            int locNodeY = clusterM->nodeA.node[i].y;
+            int countCH = clusterM->clusterN.countCHs;
 
             //get the shortest distance to a cluster head
             int loc = 0;
@@ -83,7 +60,7 @@ ClusterModel dissEnergyNonCH(ClusterModel clusterM, RoundArch roundA)
 
             for(int j=0;j<countCH;j++)
             {
-                double dist = sqrt( pow(locNodeX - clusterN.cNodes[j].locX, 2) + pow(locNodeY - clusterN.cNodes[j].locY, 2));
+                double dist = sqrt( pow(locNodeX - clusterM->clusterN.cNodes[j].locX, 2) + pow(locNodeY - clusterM->clusterN.cNodes[j].locY, 2));
 
                 if(dist < minDis)
                 {
@@ -91,26 +68,23 @@ ClusterModel dissEnergyNonCH(ClusterModel clusterM, RoundArch roundA)
                     loc = j; 
                 }
             }
-
-            //[minDis, loc] = min(sqrt(sum((repmat(locNode, countCH, 1) - cluster.loc)^2))); //This wont work
             
-            int minDisCH =  clusterN.cNodes[loc].no;
+            int minDisCH =  clusterM->clusterN.cNodes[loc].no;
 
             if (minDis > d0)
             {
-                nodeA.node[i].energy = nodeA.node[i].energy - ctrPacketLength * ETX + Emp * packetLength * (pow(minDis, 4));
+                clusterM->nodeA.node[i].energy = clusterM->nodeA.node[i].energy - ctrPacketLength * ETX + Emp * packetLength * (pow(minDis, 4));
             }
             else
             {
-                nodeA.node[i].energy = nodeA.node[i].energy - ctrPacketLength * ETX + Efs * packetLength * (pow(minDis, 2));
+                clusterM->nodeA.node[i].energy = clusterM->nodeA.node[i].energy - ctrPacketLength * ETX + Efs * packetLength * (pow(minDis, 2));
             }
 
             if(minDis > 0)
             {
-                nodeA.node[minDisCH].energy = nodeA.node[minDisCH].energy - ((ERX + EDA) * packetLength );
+                clusterM->nodeA.node[minDisCH].energy = clusterM->nodeA.node[minDisCH].energy - ((ERX + EDA) * packetLength );
             }           
         }
     }
-    clusterM.nodeA = nodeA;
     return clusterM;    
 }

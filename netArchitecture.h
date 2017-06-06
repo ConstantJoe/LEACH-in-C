@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #ifndef NETARCHITECTURE_H
 #define NETARCHITECTURE_H
 
@@ -30,7 +32,7 @@ typedef struct NetArch
 	struct Energy energy;
 } NetArch;
 
-struct NetArch newNetwork(int length, int width, int sinkX, int sinkY);
+struct NetArch* newNetwork(int length, int width, int sinkX, int sinkY);
 
 #endif /* NETARCHITECTURE_H */
 

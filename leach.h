@@ -7,7 +7,7 @@
 
 float prob(int roundNo, float p);
 
-struct ClusterModel leach(ClusterModel clusterM, int nodeId);
+struct ClusterModel* leach(ClusterModel* clusterM, int nodeId);
 
 #endif /* LEACH_H */
 

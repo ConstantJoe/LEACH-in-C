@@ -6,7 +6,6 @@
 #define CLUSTERMODEL_H
 
 #define MAX_CHS
-//These should all be arrays?
 
 typedef struct ClusterNode{
 	int no; //index of the node in the nodeArchitecture

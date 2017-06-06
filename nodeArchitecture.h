@@ -24,7 +24,7 @@ typedef struct NodeArch {
 	Node node[MAX_NODES];
 } NodeArch;
 
-NodeArch newNodes(NetArch netA, int numNodes);
+struct NodeArch* newNodes(NetArch* netA, int numNodes);
 
 #endif /* NODEARCHITECTURE_H */
 
