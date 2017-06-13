@@ -22,7 +22,7 @@ typedef struct ClusterNodes{
 typedef struct ClusterModel{
 	NetArch netA;
 	NodeArch nodeA;
-	int numCluster;
+	float numCluster;
 	float p;
 	ClusterNodes clusterN;
 } ClusterModel;

@@ -1,15 +1,17 @@
 #include "newCluster.h"
 
-int clusterOptimum(NetArch* netA, NodeArch* nodeA, double dBS)
+double clusterOptimum(NetArch* netA, NodeArch* nodeA, double dBS)
 {
-	int n = nodeA->numNode;
+	int n = nodeA->numNode - nodeA->numDead;
 	double m = sqrt(netA->yard.height * netA->yard.width);
 
 	float x = netA->energy.freespace / netA->energy.multipath;
 
 	double kopt = sqrt(n) / sqrt(2*M_PI) * sqrt(netA->energy.freespace / netA->energy.multipath) * m / pow(dBS,2);
+	printf("kopt: %f\r\n", kopt);
 	kopt = round(kopt);
-	return (int) kopt;
+	printf("kopt rounded: %f\r\n", kopt);
+	return kopt;
 }
 
 ClusterModel* newCluster(NetArch* netA, NodeArch* nodeA)
@@ -28,6 +30,10 @@ ClusterModel* clusterRun(ClusterModel* clusterM, int roundNo, float p_numCluster
 		double dBS = sqrt(pow(clusterM->netA.sink.x - clusterM->netA.yard.height, 2) + pow(clusterM->netA.sink.y - clusterM->netA.yard.width, 2));
 		clusterM->numCluster = clusterOptimum(&clusterM->netA, &clusterM->nodeA, dBS);
 		clusterM->p = 1 / clusterM->numCluster;	
+
+		printf("numCluster: %f\r\n", clusterM->numCluster);
+		printf("p: %f\r\n", clusterM->p);
+	
 	}
 	else
 	{

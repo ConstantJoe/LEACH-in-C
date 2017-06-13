@@ -11,12 +11,13 @@
 #include "newCluster.h"
 
 #define NUMNODES 100
-#define P 	0.1
+#define P 	0
 
-//TODO: energy of nodes continues to drop even after death?
+//TODO: Behaviour when down to last two nodes.
+//      Use of .G, which stops the same nodes being chose as CHs over and over
 //      Once working, remove unnecessary libs (e.g. stdio)
 //      Better documentation needed.   
-//      Add clean to Makefule
+//      Add clean to Makefile
 //      Visualisation / data output
 
 int main() 
@@ -32,13 +33,29 @@ int main()
 
 	for(int i=0; i<roundA->numRound; i++)
 	{
-        printf("Node 1 characteristics: %d\r\n", nodeA->node[0].x);
-        printf("Node 1 characteristics: %d\r\n", nodeA->node[0].y);
-        printf("Node 1 characteristics: %c\r\n", nodeA->node[0].type);
-        printf("Node 1 characteristics: energy 1 %f\r\n", nodeA->node[0].energy);
-        printf("Node 1 characteristics: %d\r\n", nodeA->node[0].G);
-        printf("Node 1 characteristics: %d\r\n", nodeA->node[0].clusterHead);
-        printf("Node 1 characteristics: %d\r\n", nodeA->node[0].dead);
+        if(nodeA->numNode - nodeA->numDead < 5){
+            for(int i=0; i<clusterM->nodeA.numNode; i++){
+                if(clusterM->nodeA.node[i].dead == 0){
+                    printf("Node %d characteristics: %d\r\n", i, nodeA->node[i].x);
+                    printf("Node %d characteristics: %d\r\n", i, nodeA->node[i].y);
+                    printf("Node %d characteristics: %c\r\n", i, nodeA->node[i].type);
+                    printf("Node %d characteristics: energy 1 %f\r\n", i, nodeA->node[i].energy);
+                    printf("Node %d characteristics: %d\r\n", i, nodeA->node[i].G);
+                    printf("Node %d characteristics: %d\r\n", i, nodeA->node[i].clusterHead);
+                    printf("Node %d characteristics: %d\r\n\r\n", i, nodeA->node[i].dead);
+                }
+            }
+        }
+        else{
+            printf("Node 1 characteristics: %d\r\n", nodeA->node[0].x);
+            printf("Node 1 characteristics: %d\r\n", nodeA->node[0].y);
+            printf("Node 1 characteristics: %c\r\n", nodeA->node[0].type);
+            printf("Node 1 characteristics: energy 1 %f\r\n", nodeA->node[0].energy);
+            printf("Node 1 characteristics: %d\r\n", nodeA->node[0].G);
+            printf("Node 1 characteristics: %d\r\n", nodeA->node[0].clusterHead);
+            printf("Node 1 characteristics: %d\r\n", nodeA->node[0].dead);
+        }
+        
 
 		
         clusterM = clusterRun(clusterM, i, P);
@@ -70,11 +87,23 @@ int main()
         printf("NumNodes %d \r\n", nodeA->numNode);
         printf("NumDead %d \r\n\r\n", nodeA->numDead);
 
-    	if(nodeA->numDead == nodeA->numNode)
+    	if(nodeA->numDead == nodeA->numNode - 2)
     	{
             printf("All are dead \r\n");
             printf(" %d  \r\n", nodeA->numDead);
             printf(" %d  \r\n", nodeA->numNode);
+
+            for(int i=0; i<clusterM->nodeA.numNode; i++){
+                if(clusterM->nodeA.node[i].dead == 0){
+                    printf("Node %d characteristics: %d\r\n", i, nodeA->node[i].x);
+                    printf("Node %d characteristics: %d\r\n", i, nodeA->node[i].y);
+                    printf("Node %d characteristics: %c\r\n", i, nodeA->node[i].type);
+                    printf("Node %d characteristics: energy %f\r\n", i, nodeA->node[i].energy);
+                    printf("Node %d characteristics: %d\r\n", i, nodeA->node[i].G);
+                    printf("Node %d characteristics: %d\r\n", i, nodeA->node[i].clusterHead);
+                    printf("Node %d characteristics: %d\r\n\r\n", i, nodeA->node[i].dead);
+                }
+            }
         	break;
     	}
 	}
