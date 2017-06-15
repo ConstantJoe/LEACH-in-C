@@ -8,3 +8,7 @@ OBJ = start.o nodeArchitecture.o netArchitecture.o roundArchitecture.o leach.o d
 
 leach: $(OBJ)
 	gcc -o $@ $^ $(CFLAGS) 
+
+clean: 
+	rm *.o
+	rm leach

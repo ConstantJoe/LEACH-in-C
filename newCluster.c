@@ -8,9 +8,7 @@ double clusterOptimum(NetArch* netA, NodeArch* nodeA, double dBS)
 	float x = netA->energy.freespace / netA->energy.multipath;
 
 	double kopt = sqrt(n) / sqrt(2*M_PI) * sqrt(netA->energy.freespace / netA->energy.multipath) * m / pow(dBS,2);
-	printf("kopt: %f\r\n", kopt);
 	kopt = round(kopt);
-	printf("kopt rounded: %f\r\n", kopt);
 	return kopt;
 }
 
@@ -29,11 +27,12 @@ ClusterModel* clusterRun(ClusterModel* clusterM, int roundNo, float p_numCluster
 	{
 		double dBS = sqrt(pow(clusterM->netA.sink.x - clusterM->netA.yard.height, 2) + pow(clusterM->netA.sink.y - clusterM->netA.yard.width, 2));
 		clusterM->numCluster = clusterOptimum(&clusterM->netA, &clusterM->nodeA, dBS);
-		clusterM->p = 1 / clusterM->numCluster;	
 
-		printf("numCluster: %f\r\n", clusterM->numCluster);
-		printf("p: %f\r\n", clusterM->p);
-	
+		if(clusterM->numCluster == 0){
+			clusterM->p = 1; //when there's only 1 node left optimal # of CHs is 0 -> ensure only node is set as the CH
+		} else{
+			clusterM->p = 1 / clusterM->numCluster;	
+		}	
 	}
 	else
 	{

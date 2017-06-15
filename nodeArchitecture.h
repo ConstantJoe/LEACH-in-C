@@ -12,7 +12,7 @@ typedef struct Node {
 	int x;
 	int y;
 	char type;
-	int G;
+	float G;
 	float energy;
 	int clusterHead;
 	int dead;

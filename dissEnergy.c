@@ -59,18 +59,11 @@ ClusterModel* dissEnergyNonCH(ClusterModel* clusterM, RoundArch* roundA)
             //get the shortest distance to a cluster head
             int loc = 0;
             double minDis = 1000000;
-
-            if(i==0){
-                printf("Node 1 characteristics: dissEnergy 1 %f\r\n", clusterM->nodeA.node[0].energy);    
-            }
             
             for(int j=0;j<countCH;j++)
             {
                 double dist = sqrt( pow(locNodeX - clusterM->clusterN.cNodes[j].locX, 2) + pow(locNodeY - clusterM->clusterN.cNodes[j].locY, 2));
-
-                if(i==0){
-                    printf("dist %f\r\n", dist);    
-                } 
+ 
                 if(dist < minDis)
                 {
                     minDis = dist;
@@ -84,36 +77,17 @@ ClusterModel* dissEnergyNonCH(ClusterModel* clusterM, RoundArch* roundA)
 
             if (minDis > d0)
             {
-                if(i==0){
-                    printf("minDis > d0\r\n");    
-                    printf("energy lost: %f\r\n", ctrPacketLength * ETX + Emp * packetLength * (pow(minDis, 4)));
-                    printf("minDis %f\r\n", minDis);
-                }
                 clusterM->nodeA.node[i].energy -= /*clusterM->nodeA.node[i].energy -*/ ctrPacketLength * ETX + Emp * packetLength * (pow(minDis, 4));
             }
             else
             {
-                if(i==0){
-                    printf("minDis <= d0\r\n");
-                    printf("energy lost: %f\r\n", ctrPacketLength * ETX + Efs * packetLength * (pow(minDis, 2)));    //This sometimes is a very big number - going negative?
-                    printf("minDis %f\r\n", minDis);
-                }
                 clusterM->nodeA.node[i].energy -= /*clusterM->nodeA.node[i].energy -*/ ctrPacketLength * ETX + Efs * packetLength * (pow(minDis, 2));
             }
 
             if(minDis > 0)
             {
-                if(i==0){
-                    printf("minDis > d0 CH\r\n");
-                    printf("energy lost: %f\r\n", ((ERX + EDA) * packetLength ));    
-                    //printf("minDis \f\r\n", minDis);
-                }
                 clusterM->nodeA.node[minDisCH].energy = clusterM->nodeA.node[minDisCH].energy - ((ERX + EDA) * packetLength );
-            }
-
-            if(i==0){
-                printf("Node 1 characteristics: dissEnergy 2 %f\r\n", clusterM->nodeA.node[0].energy);    
-            }           
+            }     
         }
     }
     return clusterM;    
