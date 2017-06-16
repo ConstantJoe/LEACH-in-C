@@ -6,7 +6,7 @@
  */
 
 #include "clusterModel.h"
-#include "leach.h"
+#include "./leach_algorithm/leach.h"
 #include <math.h>
 #include <stdio.h>
 

@@ -5,7 +5,7 @@
  *  2017
  */
 
-#include "clusterModel.h"
+#include "../network/clusterModel.h"
 #include <math.h>
 #include <stdio.h>
 

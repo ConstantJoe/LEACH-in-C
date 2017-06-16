@@ -5,8 +5,8 @@
  *  2017
  */
 
-#include "clusterModel.h"
-#include "roundArchitecture.h"
+#include "../network/clusterModel.h"
+#include "../network/roundArchitecture.h"
 #include <math.h>
 #include <stdio.h>
 

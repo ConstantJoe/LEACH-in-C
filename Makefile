@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-I. -lm -g
-DEPS = nodeArchitecture.h netArchitecture.h roundArchitecture.h leach.h dissEnergy.h clusterModel.h newCluster.h
-OBJ = start.o nodeArchitecture.o netArchitecture.o roundArchitecture.o leach.o dissEnergy.o newCluster.o  
+DEPS = network/nodeArchitecture.h network/netArchitecture.h network/roundArchitecture.h leach_algorithm/leach.h energy/dissEnergy.h network/clusterModel.h network/newCluster.h
+OBJ = start.o network/nodeArchitecture.o network/netArchitecture.o network/roundArchitecture.o leach_algorithm/leach.o energy/dissEnergy.o network/newCluster.o  
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
@@ -12,3 +12,6 @@ leach: $(OBJ)
 clean: 
 	rm *.o
 	rm leach
+	rm ./leach_algorithm/*.o
+	rm ./network/*.o
+	rm ./energy/*.o

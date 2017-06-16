@@ -1,7 +1,5 @@
 # LEACH-in-C
-An implementation of the LEACH algorithm, written in C.
-
-This is a port of the Matlab implementation of LEACH, which was written by Mohammad Hossein Homaei of the Wireless Sensor Network Laboratory of Iran.
+An implementation of the LEACH algorithm, written in C. This is a port of a Matlab implementation of LEACH, which was written by Mohammad Hossein Homaei of the Wireless Sensor Network Laboratory of Iran, and is based on the *original* version of LEACH described by Heinzelman et. al. in "An Application-Specific Protocol Architecture for Wireless Microsensor Networks".
 
 This work is currently in progress. 
 

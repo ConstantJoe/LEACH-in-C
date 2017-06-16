@@ -9,13 +9,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "netArchitecture.h"
-#include "nodeArchitecture.h"
-#include "roundArchitecture.h"
-#include "clusterModel.h"
-#include "leach.h"
-#include "dissEnergy.h"
-#include "newCluster.h"
+#include "./network/netArchitecture.h"
+#include "./network/nodeArchitecture.h"
+#include "./network/roundArchitecture.h"
+#include "./network/clusterModel.h"
+#include "./leach_algorithm/leach.h"
+#include "./energy/dissEnergy.h"
+#include "./network/newCluster.h"
 
 #define NUMNODES 100
 #define P 	0
