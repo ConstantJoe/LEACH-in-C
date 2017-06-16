@@ -1,5 +1,15 @@
+/*
+ *  Implementation of Mohammad Hossein Homaei's LEACH simulator, in C.
+ *  Joseph Finnegan
+ *  joseph.finnegan@cs.nuim.ie
+ *  2017
+ */
+
 #include "netArchitecture.h"
 
+/*
+ *	Creates a network struct and populates it with information about the environment, wireless energy model, and sink.
+ */
 struct NetArch* newNetwork(int width, int height, int sinkX, int sinkY)
 {
 	struct NetArch *netA = malloc(sizeof *netA); 

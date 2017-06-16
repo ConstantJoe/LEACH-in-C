@@ -1,5 +1,15 @@
+/*
+ *  Implementation of Mohammad Hossein Homaei's LEACH simulator, in C.
+ *  Joseph Finnegan
+ *  joseph.finnegan@cs.nuim.ie
+ *  2017
+ */
+
 #include "dissEnergy.h"
 
+/*
+ *  Calculate energy lost by each CH during the round. 
+ */
 ClusterModel* dissEnergyCH(ClusterModel* clusterM, RoundArch* roundA)
 {
     double d0 = sqrt(clusterM->netA.energy.freespace / clusterM->netA.energy.multipath);
@@ -18,26 +28,26 @@ ClusterModel* dissEnergyCH(ClusterModel* clusterM, RoundArch* roundA)
     {
         int chNo = clusterM->clusterN.cNodes[i].no;
         double distance = clusterM->clusterN.cNodes[i].distance;
-        float energy = clusterM->nodeA.node[chNo].energy;
 
         if(distance >= d0)
         {
-            clusterM->nodeA.node[chNo].energy = energy - ((ETX+EDA) * packetLength + Emp * packetLength * pow(distance, 2));
+            clusterM->nodeA.node[chNo].energy -= ((ETX+EDA) * packetLength + Emp * packetLength * pow(distance, 4));
         }
         else
         {
-            clusterM->nodeA.node[chNo].energy = energy - ((ETX+EDA) * packetLength + Efs * packetLength * pow(distance, 2));
+            clusterM->nodeA.node[chNo].energy -= ((ETX+EDA) * packetLength + Efs * packetLength * pow(distance, 2));
         }
-        clusterM->nodeA.node[chNo].energy = clusterM->nodeA.node[chNo].energy - ctrPacketLength * ERX * round(clusterM->nodeA.numNode / clusterM->numCluster);
+        clusterM->nodeA.node[chNo].energy -= ctrPacketLength * ERX * round(clusterM->nodeA.numNode / clusterM->numCluster);
     }
 
     return clusterM;
 }
 
+/*
+ *  Calculate energy lost by each non-CH during the round. 
+ */
 ClusterModel* dissEnergyNonCH(ClusterModel* clusterM, RoundArch* roundA)
-{
-    //something going wrong in here
-    
+{    
     double d0 = sqrt(clusterM->netA.energy.freespace / clusterM->netA.energy.multipath);
 
     float ETX = clusterM->netA.energy.transfer;
@@ -77,16 +87,16 @@ ClusterModel* dissEnergyNonCH(ClusterModel* clusterM, RoundArch* roundA)
 
             if (minDis > d0)
             {
-                clusterM->nodeA.node[i].energy -= /*clusterM->nodeA.node[i].energy -*/ ctrPacketLength * ETX + Emp * packetLength * (pow(minDis, 4));
+                clusterM->nodeA.node[i].energy -= ctrPacketLength * ETX + Emp * packetLength * (pow(minDis, 4));
             }
             else
             {
-                clusterM->nodeA.node[i].energy -= /*clusterM->nodeA.node[i].energy -*/ ctrPacketLength * ETX + Efs * packetLength * (pow(minDis, 2));
+                clusterM->nodeA.node[i].energy -= ctrPacketLength * ETX + Efs * packetLength * (pow(minDis, 2));
             }
 
             if(minDis > 0)
             {
-                clusterM->nodeA.node[minDisCH].energy = clusterM->nodeA.node[minDisCH].energy - ((ERX + EDA) * packetLength );
+                clusterM->nodeA.node[minDisCH].energy -= ((ERX + EDA) * packetLength);
             }     
         }
     }

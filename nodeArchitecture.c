@@ -1,6 +1,15 @@
+/*
+ *  Implementation of Mohammad Hossein Homaei's LEACH simulator, in C.
+ *  Joseph Finnegan
+ *  joseph.finnegan@cs.nuim.ie
+ *  2017
+ */
+
 #include "nodeArchitecture.h"
 
-
+/*
+ *	Generates numNodes number of nodes in random locations across the defined 2D environment.
+ */
 struct NodeArch* newNodes(NetArch* netA, int numNodes)
 {
 	srand(time(NULL)); 

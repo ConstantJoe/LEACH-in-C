@@ -1,11 +1,16 @@
+/*
+ *  Implementation of Mohammad Hossein Homaei's LEACH simulator, in C.
+ *  Joseph Finnegan
+ *  joseph.finnegan@cs.nuim.ie
+ *  2017
+ */
+
 #include "clusterModel.h"
 #include <math.h>
 #include <stdio.h>
 
 #ifndef LEACH_H
 #define LEACH_H
-
-float prob(int roundNo, float p);
 
 struct ClusterModel* leach(ClusterModel* clusterM, int nodeId);
 

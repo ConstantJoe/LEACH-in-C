@@ -1,3 +1,10 @@
+/*
+ *  Implementation of Mohammad Hossein Homaei's LEACH simulator, in C.
+ *  Joseph Finnegan
+ *  joseph.finnegan@cs.nuim.ie
+ *  2017
+ */
+
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -13,20 +20,12 @@
 #define NUMNODES 100
 #define P 	0
 
-//TODO: Behaviour when down to last two nodes.
-//      Cleanup
-//      Once working, remove unnecessary libs (e.g. stdio)
-//      Better documentation needed.   
-//      Add clean to Makefile
-//      Visualisation / data output
-//      LEACH-C version
-
 int main() 
 {  
 	struct NetArch* netA  	 = newNetwork(100, 100, 50, 175);
 	struct NodeArch* nodeA 	 = newNodes(netA, NUMNODES);
 	struct RoundArch* roundA  = newRound(0,0,0);
-    struct ClusterModel* clusterM = newCluster(netA, nodeA);  
+    struct ClusterModel* clusterM = newClusterModel(netA, nodeA);  
 
 	for(int i=0; i<roundA->numRound; i++)
 	{		

@@ -1,5 +1,15 @@
+/*
+ *  Implementation of Mohammad Hossein Homaei's LEACH simulator, in C.
+ *  Joseph Finnegan
+ *  joseph.finnegan@cs.nuim.ie
+ *  2017
+ */
+
 #include "roundArchitecture.h"
 
+/*
+ *	Generate handler for overall experiment details.
+ */
 struct RoundArch* newRound(int numRound, int packetLength, int ctrPacketLength)
 {
 	struct RoundArch *roundA = malloc(sizeof *roundA); 
@@ -31,7 +41,5 @@ struct RoundArch* newRound(int numRound, int packetLength, int ctrPacketLength)
 		roundA->ctrPacketLength = ctrPacketLength;	
 	}
 	
-	
-
 	return roundA;
 }

@@ -1,5 +1,17 @@
+/*
+ *  Implementation of Mohammad Hossein Homaei's LEACH simulator, in C.
+ *  Joseph Finnegan
+ *  joseph.finnegan@cs.nuim.ie
+ *  2017
+ */
+
 #include "newCluster.h"
 
+/*
+ *	Calculates the optimal number of clusters based on the area size, number of nodes, and communication energy models.
+ *	See "An Application-Specific Protocol Architecture for Wireless Microsensor Networks" by Heinzelman et. al. for a 
+ *	derivation of the formula.
+ */
 double clusterOptimum(NetArch* netA, NodeArch* nodeA, double dBS)
 {
 	int n = nodeA->numNode - nodeA->numDead;
@@ -12,7 +24,11 @@ double clusterOptimum(NetArch* netA, NodeArch* nodeA, double dBS)
 	return kopt;
 }
 
-ClusterModel* newCluster(NetArch* netA, NodeArch* nodeA)
+/**
+*	Creates a "blank" cluster model to use in this round of operation, populated with just information on the environment and 
+*	individual node locations and energies. Creation of clusters from this is handled in the clusterRun function.
+**/
+ClusterModel* newClusterModel(NetArch* netA, NodeArch* nodeA)
 {
 	struct ClusterModel *clusterM = malloc(sizeof *clusterM); 
 	clusterM->netA = *netA;
@@ -20,6 +36,11 @@ ClusterModel* newCluster(NetArch* netA, NodeArch* nodeA)
 
 	return clusterM;
 }
+
+/**
+*	Calculates the optimal number of nodes, then calls the leach algorithm to generate clusters. Leach algorithm is defined separately
+*	to enable this method to be easily modified to handle a different clustering algorithm.  
+**/
 
 ClusterModel* clusterRun(ClusterModel* clusterM, int roundNo, float p_numCluster)
 {

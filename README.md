@@ -15,8 +15,8 @@ This work is currently in progress.
 
 	Implement a proper wireless propagation model. As of now it is assumed all messages reach their destination.
 
-	Some refactoring.
-
-	Proper documentation.
-
 	Move files to separate folders - /network, /energy, and /leach, with headers and source files separated within.
+
+	Visualisation of results
+
+	Later, convert to a version that can be ran on Contiki
