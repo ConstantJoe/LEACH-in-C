@@ -9,7 +9,7 @@ This work is currently in progress.
 
 	Collect relevant data about each round and output it to a file.
 
-	Enable input of network information (locations of all nodes, size of field, number of round etc.)
+	Add --help flag
 
 	Compare results to the Matlab version.
 
